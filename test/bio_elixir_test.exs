@@ -1,8 +1,7 @@
 defmodule BioElixirTest do
   use ExUnit.Case
-  doctest BioElixir
 
-  alias BioElixir.{Seq, SeqIO}
+  alias BioElixir.Seq
 
   test "create new Seq from string arguments" do
     seq = Seq.new("AN001", "ATCGN")

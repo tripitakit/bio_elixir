@@ -2,17 +2,18 @@ defmodule BioElixir.Seq do
   @moduledoc """
     Seq represents DNA sequences as structures
     composed of display_id and seq strings.
-
   """
 
   defstruct [:display_id, :seq]
   alias BioElixir.Seq
 
+  @type t :: %Seq{display_id: String.t(), seq: String.t()}
+
   @doc """
     new/2
-    Create a new sequence structure, given display_id and sequence.
+    Create a new Seq structure, given display_id and sequence.
   """
-  @spec new(display_id :: String.t(), seq :: String.t()) :: %Seq{}
+  @spec new(display_id :: String.t(), seq :: String.t()) :: Seq.t()
   def new(display_id, seq) do
     %Seq{
       display_id: display_id,
@@ -22,9 +23,9 @@ defmodule BioElixir.Seq do
 
   @doc """
     reverse_complement/1
-    Reverse and complement a nucleotide sequence.
+    Reverse and complement a Seq's nucleotide sequence.
   """
-  @spec reverse_complement(sequence :: %Seq{}) :: %Seq{}
+  @spec reverse_complement(sequence :: Seq.t()) :: Seq.t()
   def reverse_complement(%Seq{} = sequence) do
     %Seq{
       display_id: sequence.display_id,
