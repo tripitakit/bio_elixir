@@ -49,6 +49,6 @@ defmodule BioElixir.Seq do
 
   defp _complement(nt) do
     raise RuntimeError,
-      message: "Complenent error: '#{nt}' is not a valid code for a DNA nucleotide."
+      message: "Invalid DNA nucleotide code: #{nt}"
   end
 end
