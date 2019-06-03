@@ -1,7 +1,7 @@
 defmodule BioElixirTest do
   use ExUnit.Case
 
-  alias BioElixir.{Alphabet, Seq}
+  alias BioElixir.{Alphabet, Seq, SeqIO}
 
   test "create new DNA Seq from string arguments" do
     {:ok, seq} = Seq.new("AN001", "ATCGN")
@@ -19,5 +19,14 @@ defmodule BioElixirTest do
 
   test "complement invalid DNA nt-code" do
     assert Alphabet.complement("J") == nil
+  end
+
+  test "parse a fasta multisequence string" do
+    input = ">Seq1\nAAATTTCCCGGG\n>Seq2\nGGGCCCTTTAAA"
+
+    assert ([seq1, seq2] = SeqIO.FastaParser.parse(input)) == [seq1, seq2]
+
+    assert seq1 == %Seq{display_id: "Seq1", seq: "AAATTTCCCGGG"}
+    assert seq2 == %Seq{display_id: "Seq2", seq: "GGGCCCTTTAAA"}
   end
 end
