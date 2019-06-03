@@ -50,17 +50,17 @@ defmodule BioElixir.Seq do
     nt_seq
     |> String.upcase()
     |> String.split("", trim: true)
-    |> Enum.reduce([], fn nt, acc -> [do_complement(nt) | acc] end)
+    |> Enum.reduce([], fn nt, acc -> [complement(nt) | acc] end)
     |> Enum.join("")
   end
 
-  defp do_complement("A"), do: "T"
-  defp do_complement("T"), do: "A"
-  defp do_complement("G"), do: "C"
-  defp do_complement("C"), do: "G"
-  defp do_complement("N"), do: "N"
+  defp complement("A"), do: "T"
+  defp complement("T"), do: "A"
+  defp complement("G"), do: "C"
+  defp complement("C"), do: "G"
+  defp complement("N"), do: "N"
 
-  defp do_complement(nt) do
+  defp complement(nt) do
     raise RuntimeError,
       message: "Invalid DNA nucleotide code: #{nt}"
   end
