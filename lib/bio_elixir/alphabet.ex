@@ -22,6 +22,6 @@ defmodule BioElixir.Alphabet do
     Z: "Z"
   }
 
-  @spec complement(nt: binary()) :: binary() | nil
+  @spec complement(binary()) :: nil | binary()
   def complement(nt), do: Map.get(@dna_iupac, String.to_atom(nt))
 end

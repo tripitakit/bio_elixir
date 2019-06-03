@@ -43,8 +43,13 @@ defmodule BioElixir.Seq do
     end
   end
 
+  @spec reverse_complement(sequence :: binary()) :: {:ok, binary()} | {:error, binary()}
+  def reverse_complement(sequence) when is_binary(sequence) do
+    do_reverse_complement(sequence)
+  end
+
   def reverse_complement(other) do
-    {:error, "Expecting a %Seq{}, but received #{inspect(other)}."}
+    {:error, "Expecting a %Seq{} or a String, but received #{inspect(other)}."}
   end
 
   @spec do_reverse_complement(nt_seq :: binary()) :: {:error, binary()} | {:ok, binary()}
