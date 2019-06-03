@@ -3,13 +3,21 @@ defmodule BioElixirTest do
 
   alias BioElixir.Seq
 
-  test "create new Seq from string arguments" do
-    seq = Seq.new("AN001", "ATCGN")
+  test "create new DNA Seq from string arguments" do
+    {:ok, seq} = Seq.new("AN001", "ATCGN")
     assert seq == %Seq{display_id: "AN001", seq: "ATCGN"}
   end
 
-  test "reverse complement a Seq" do
-    seq = Seq.new("AN002", "ATCGN")
-    assert Seq.reverse_complement(seq) == %Seq{display_id: "AN002", seq: "NCGAT"}
+  test "reverse complement a DNA Seq" do
+    {:ok, seq} = Seq.new("AN002", "ATCGN")
+    assert Seq.reverse_complement(seq) == {:ok, %Seq{display_id: "AN002", seq: "NCGAT"}}
+  end
+
+  test "reverse complement invalid DNA Seq raise error" do
+    {:ok, seq} = Seq.new("INVALID003", "XTCGN")
+
+    assert_raise RuntimeError, fn ->
+      Seq.reverse_complement(seq)
+    end
   end
 end
