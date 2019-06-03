@@ -4,13 +4,13 @@ defmodule BioElixir.SeqIO.FastaParser do
   """
 
   def parse(fasta_string) do
-    seqs_separator()
+    sequence_separator()
     |> Regex.split(String.trim(fasta_string))
     |> Parallel.filter(&valid_seq?/1)
     |> Parallel.map(&parse_data_string/1)
   end
 
-  defp seqs_separator(), do: ~r/\n+\s*(?=>)/
+  defp sequence_separator(), do: ~r/\n+\s*(?=>)/
 
   defp valid_seq?(data_string) do
     String.contains?(data_string, "\n") && String.starts_with?(data_string, ">")
