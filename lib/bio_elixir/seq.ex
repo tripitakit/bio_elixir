@@ -4,20 +4,20 @@ defmodule BioElixir.Seq do
     composed of display_id and seq strings.
   """
 
-  alias BioElixir.Seq
+  alias BioElixir.{Alphabet, Seq}
 
   defstruct [:display_id, :seq]
 
   @typedoc """
   Type that represents Seq struct with :display_id and :seq as strings.
   """
-  @type t :: %Seq{display_id: String.t(), seq: String.t()}
+  @type t :: %Seq{display_id: binary(), seq: binary()}
 
   @doc """
     new/2
     Create a new Seq structure, given display_id and sequence.
   """
-  @spec new(display_id :: String.t(), seq :: String.t()) :: {:ok, Seq.t()}
+  @spec new(display_id :: binary(), seq :: binary()) :: {:ok, Seq.t()}
   def new(display_id, seq) do
     new_seq = %Seq{
       display_id: display_id,
@@ -31,37 +31,41 @@ defmodule BioElixir.Seq do
     reverse_complement/1
     Reverse and complement a Seq's nucleotide sequence.
   """
-  @spec reverse_complement(sequence :: Seq.t()) :: {:ok, Seq.t()}
+  @spec reverse_complement(sequence :: Seq.t()) :: {:ok, Seq.t()} | {:error, binary()}
   def reverse_complement(%Seq{} = sequence) do
-    new_seq = %Seq{
-      display_id: sequence.display_id,
-      seq: do_reverse_complement(sequence.seq)
-    }
+    with {:ok, reverse_complement_seq} <- do_reverse_complement(sequence.seq) do
+      new_seq = %Seq{
+        display_id: sequence.display_id,
+        seq: reverse_complement_seq
+      }
 
-    {:ok, new_seq}
+      {:ok, new_seq}
+    end
   end
 
   def reverse_complement(other) do
     {:error, "Expecting a %Seq{}, but received #{inspect(other)}."}
   end
 
-  @spec do_reverse_complement(nt_seq :: String.t()) :: String.t()
+  @spec do_reverse_complement(nt_seq :: binary()) :: {:error, binary()} | {:ok, binary()}
   defp do_reverse_complement(nt_seq) when is_binary(nt_seq) do
-    nt_seq
-    |> String.upcase()
-    |> String.split("", trim: true)
-    |> Enum.reduce([], fn nt, acc -> [complement(nt) | acc] end)
-    |> Enum.join("")
-  end
+    complement_seq =
+      nt_seq
+      |> String.upcase()
+      |> String.split("", trim: true)
+      |> Enum.map(&Alphabet.complement(&1))
 
-  defp complement("A"), do: "T"
-  defp complement("T"), do: "A"
-  defp complement("G"), do: "C"
-  defp complement("C"), do: "G"
-  defp complement("N"), do: "N"
+    case Enum.any?(complement_seq, &is_nil(&1)) do
+      false ->
+        reverse_complement_seq =
+          complement_seq
+          |> Enum.reverse()
+          |> Enum.join("")
 
-  defp complement(nt) do
-    raise RuntimeError,
-      message: "Invalid DNA nucleotide code: #{nt}"
+        {:ok, reverse_complement_seq}
+
+      true ->
+        {:error, "Unknown nucleotide code in DNA sequence."}
+    end
   end
 end

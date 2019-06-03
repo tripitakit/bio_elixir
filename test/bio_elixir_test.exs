@@ -1,7 +1,7 @@
 defmodule BioElixirTest do
   use ExUnit.Case
 
-  alias BioElixir.Seq
+  alias BioElixir.{Alphabet, Seq}
 
   test "create new DNA Seq from string arguments" do
     {:ok, seq} = Seq.new("AN001", "ATCGN")
@@ -13,11 +13,11 @@ defmodule BioElixirTest do
     assert Seq.reverse_complement(seq) == {:ok, %Seq{display_id: "AN002", seq: "NCGAT"}}
   end
 
-  test "reverse complement invalid DNA Seq raise error" do
-    {:ok, seq} = Seq.new("INVALID003", "XTCGN")
+  test "complement valid DNA nt-code" do
+    assert Alphabet.complement("A") == "T"
+  end
 
-    assert_raise RuntimeError, fn ->
-      Seq.reverse_complement(seq)
-    end
+  test "complement invalid DNA nt-code" do
+    assert Alphabet.complement("J") == nil
   end
 end
