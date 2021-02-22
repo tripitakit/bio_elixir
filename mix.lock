@@ -1,7 +1,4 @@
 %{
-  "dialyxir": {:hex, :dialyxir, "1.0.0-rc.6", "78e97d9c0ff1b5521dd68041193891aebebce52fc3b93463c0a6806874557d7d", [:mix], [{:erlex, "~> 0.2.1", [hex: :erlex, repo: "hexpm", optional: false]}], "hexpm"},
-  "dna_zip": {:git, "https://github.com/tripitakit/dna_zip.git", "e4a3b053a2c288e8261908c920a4b831810afd91", [branch: "main"]},
-  "erlex": {:hex, :erlex, "0.2.1", "cee02918660807cbba9a7229cae9b42d1c6143b768c781fa6cee1eaf03ad860b", [:mix], [], "hexpm"},
   "fasta": {:hex, :fasta, "0.1.0", "fa14a69396b0a7ac552b27ea864c6115e0dbe9d5ecfdaf36cbb4bf788b750a56", [:mix], [{:parallel, "~> 0.0.3", [hex: :parallel, repo: "hexpm", optional: false]}], "hexpm"},
   "parallel": {:hex, :parallel, "0.0.3", "d1c9a03f0fd6c85ba174938b9823db51e01a68f9f0e76e3f3e11989cbeb607e7", [:mix], [], "hexpm", "d9b5e98c1892f5376b4dfa28c48a3a17029f86a28d1f9ec2f7c1a2747f256a4d"},
 }
