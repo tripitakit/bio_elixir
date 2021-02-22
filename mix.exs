@@ -4,7 +4,7 @@ defmodule BioElixir.MixProject do
   def project do
     [
       app: :bio_elixir,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -22,7 +22,7 @@ defmodule BioElixir.MixProject do
   defp deps do
     [
       {:parallel, "~> 0.0.3"},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
+      {:dna_zip, git: "https://github.com/tripitakit/dna_zip.git", branch: "main"}
     ]
   end
 end
