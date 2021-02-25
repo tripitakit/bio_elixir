@@ -2,12 +2,12 @@ defmodule BioElixir.SeqIO do
   @moduledoc """
   false
   """
+  alias BioElixir.Seq
+  alias BioElixir.SeqIO.{EagerFastaParser, LazyFastaParser}
 
-  alias BioElixir.SeqIO.FastaParser
+  @spec read_fasta_file(binary) :: [Seq.t()]
+  defdelegate read_fasta_file(path), to: EagerFastaParser
 
-  def read_fasta_file(path) do
-    path
-    |> File.read!()
-    |> FastaParser.parse()
-  end
+  @spec lazy_read_fasta(binary) :: [Seq.t()]
+  defdelegate lazy_read_fasta(path), to: LazyFastaParser
 end

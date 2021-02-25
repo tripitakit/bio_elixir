@@ -1,4 +1,4 @@
-defmodule BioElixirTest do
+defmodule EagerFastaParserTest do
   use ExUnit.Case
 
   alias BioElixir.{Alphabet, Seq, SeqIO}
@@ -21,12 +21,12 @@ defmodule BioElixirTest do
     assert Alphabet.complement("J") == nil
   end
 
-  test "parse a fasta multisequence string" do
-    input = ">Seq1\nAAATTTCCCGGG\n>Seq2\nGGGCCCTTTAAA"
+  test "parse a fasta multisequence file" do
+    input = "test/two-sequences.fasta"
 
-    assert ([seq1, seq2] = SeqIO.FastaParser.parse(input)) == [seq1, seq2]
+    assert ([seq1, seq2] = SeqIO.read_fasta_file(input)) == [seq1, seq2]
 
-    assert seq1 == %Seq{display_id: "Seq1", seq: "AAATTTCCCGGG"}
-    assert seq2 == %Seq{display_id: "Seq2", seq: "GGGCCCTTTAAA"}
+    assert seq1 == %Seq{display_id: "Seq1", seq: "AAATTTCCCGGGGGGCCCTTTAAA"}
+    assert seq2 == %Seq{display_id: "Seq2", seq: "GGGCCCTTTAAAAAATTTCCCGGG"}
   end
 end

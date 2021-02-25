@@ -1,7 +1,13 @@
-defmodule BioElixir.SeqIO.FastaParser do
+defmodule BioElixir.SeqIO.EagerFastaParser do
   @moduledoc """
   FASTA format input/output tools
   """
+
+  def read_fasta_file(path) do
+    path
+    |> File.read!()
+    |> parse()
+  end
 
   def parse(fasta_string) do
     sequence_separator()
